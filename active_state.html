@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Forensic Unit | Metadata Analysis</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary": "#234645",
+                    "tertiary-fixed-dim": "#ec9796",
+                    "inverse-surface": "#f9f9ff",
+                    "surface-container": "#161a21",
+                    "secondary-dim": "#91a384",
+                    "on-surface": "#e0e5f5",
+                    "on-error-container": "#ff9993",
+                    "outline": "#6f7583",
+                    "on-background": "#e0e5f5",
+                    "surface-tint": "#a9cecc",
+                    "on-tertiary-container": "#602627",
+                    "primary-fixed-dim": "#b6dcda",
+                    "on-tertiary": "#6c2f30",
+                    "tertiary-container": "#fba4a3",
+                    "tertiary-fixed": "#fba4a3",
+                    "on-secondary-fixed-variant": "#4f6045",
+                    "primary-fixed": "#c4eae8",
+                    "on-primary-container": "#b2d7d6",
+                    "surface": "#0c0e12",
+                    "on-tertiary-fixed-variant": "#6b2e2f",
+                    "error-container": "#7f2927",
+                    "inverse-on-surface": "#53555a",
+                    "surface-container-highest": "#202631",
+                    "on-secondary": "#15240e",
+                    "secondary": "#91a384",
+                    "primary-dim": "#9bc0be",
+                    "tertiary-dim": "#ec9796",
+                    "on-error": "#490106",
+                    "error-dim": "#bb5551",
+                    "tertiary": "#ffb7b6",
+                    "on-surface-variant": "#a5abba",
+                    "on-primary-fixed-variant": "#3f6161",
+                    "primary-container": "#2a4c4c",
+                    "surface-container-lowest": "#000000",
+                    "primary": "#a9cecc",
+                    "surface-variant": "#202631",
+                    "on-primary-fixed": "#224544",
+                    "background": "#0c0e12",
+                    "secondary-container": "#304027",
+                    "on-tertiary-fixed": "#441013",
+                    "on-secondary-container": "#b2c5a4",
+                    "surface-container-low": "#111319",
+                    "surface-dim": "#0c0e12",
+                    "surface-bright": "#252c3a",
+                    "on-secondary-fixed": "#34442b",
+                    "surface-container-high": "#1b2029",
+                    "secondary-fixed": "#d5e9c6",
+                    "secondary-fixed-dim": "#c7dab8",
+                    "outline-variant": "#424854",
+                    "inverse-primary": "#426564",
+                    "error": "#ee7d77"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Inter"],
+                    "body": ["Inter"],
+                    "label": ["Inter"],
+                    "mono": ["JetBrains Mono"]
+            }
+          },
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #0c0e12; }
+        ::-webkit-scrollbar-thumb { background: #424854; border-radius: 2px; }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body overflow-x-hidden">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full h-16 flex justify-between items-center px-6 w-full z-50 bg-[#0c0e12] font-['Inter'] tracking-tight text-sm">
+<div class="flex items-center gap-4">
+<span class="text-lg font-bold tracking-tighter text-[#e0e5f5]">Forensic Unit</span>
+<div class="hidden md:flex items-center ml-8 gap-6">
+<a class="text-[#a5abba] hover:bg-[#1b2029] px-3 py-2 rounded transition-colors" href="#">Analyzer</a>
+<a class="text-[#a9cecc] font-medium px-3 py-2 rounded" href="#">Expose &amp; Erase</a>
+<a class="text-[#a5abba] hover:bg-[#1b2029] px-3 py-2 rounded transition-colors" href="#">Vault</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<span class="bg-primary-container text-primary px-3 py-1 text-[10px] font-mono tracking-widest rounded-sm border border-outline-variant/20">100% Client-Side Processing</span>
+<div class="flex items-center gap-3 ml-4">
+<span class="material-symbols-outlined text-[#a5abba] cursor-pointer hover:text-primary transition-colors" data-icon="security">security</span>
+<span class="material-symbols-outlined text-[#a5abba] cursor-pointer hover:text-primary transition-colors" data-icon="notifications">notifications</span>
+<span class="material-symbols-outlined text-primary cursor-pointer" data-icon="account_circle">account_circle</span>
+</div>
+</div>
+</nav>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full w-64 flex flex-col h-full py-8 bg-[#111319] border-r border-[#424854]/20 hidden md:flex">
+<div class="px-6 mb-10">
+<div class="font-bold text-[#e0e5f5] text-lg uppercase tracking-wider">Forensic Unit</div>
+<div class="font-['JetBrains_Mono'] text-[10px] text-on-surface-variant/60 uppercase tracking-widest mt-1">V3.4.1 Secure</div>
+</div>
+<nav class="flex-1 space-y-1">
+<div class="px-3">
+<div class="flex items-center gap-4 px-3 py-3 text-[#a5abba] opacity-70 font-['JetBrains_Mono'] text-xs uppercase tracking-widest hover:bg-[#1b2029] hover:opacity-100 transition-all duration-300">
+<span class="material-symbols-outlined text-sm" data-icon="grid_view">grid_view</span>
+<span>Dashboard</span>
+</div>
+<div class="flex items-center gap-4 px-3 py-3 bg-[#161a21] text-[#a9cecc] border-l-2 border-[#a9cecc] font-['JetBrains_Mono'] text-xs uppercase tracking-widest transition-all duration-300">
+<span class="material-symbols-outlined text-sm" data-icon="analytics">analytics</span>
+<span>Traffic Analysis</span>
+</div>
+<div class="flex items-center gap-4 px-3 py-3 text-[#a5abba] opacity-70 font-['JetBrains_Mono'] text-xs uppercase tracking-widest hover:bg-[#1b2029] hover:opacity-100 transition-all duration-300">
+<span class="material-symbols-outlined text-sm" data-icon="memory">memory</span>
+<span>Memory Dump</span>
+</div>
+<div class="flex items-center gap-4 px-3 py-3 text-[#a5abba] opacity-70 font-['JetBrains_Mono'] text-xs uppercase tracking-widest hover:bg-[#1b2029] hover:opacity-100 transition-all duration-300">
+<span class="material-symbols-outlined text-sm" data-icon="settings_ethernet">settings_ethernet</span>
+<span>Network Logs</span>
+</div>
+<div class="flex items-center gap-4 px-3 py-3 text-[#a5abba] opacity-70 font-['JetBrains_Mono'] text-xs uppercase tracking-widest hover:bg-[#1b2029] hover:opacity-100 transition-all duration-300">
+<span class="material-symbols-outlined text-sm" data-icon="shield">shield</span>
+<span>Registry Guard</span>
+</div>
+</div>
+</nav>
+<div class="px-3 mt-auto">
+<div class="flex items-center gap-4 px-3 py-3 text-[#a5abba] opacity-70 font-['JetBrains_Mono'] text-xs uppercase tracking-widest hover:bg-[#1b2029] transition-all">
+<span class="material-symbols-outlined text-sm" data-icon="settings">settings</span>
+<span>System Settings</span>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="md:ml-64 pt-16 min-h-screen flex flex-col">
+<div class="flex-1 flex flex-col lg:flex-row">
+<!-- Left Column: Visuals -->
+<section class="lg:w-5/12 p-8 space-y-8 bg-surface">
+<header class="mb-8">
+<h1 class="text-3xl font-bold tracking-tight text-on-surface">Metadata Analysis</h1>
+<p class="text-on-surface-variant text-sm mt-2">Source: <span class="font-mono text-primary">IMG_2024_082.RAW</span></p>
+</header>
+<!-- Image Preview Container -->
+<div class="relative group aspect-square bg-surface-container-lowest overflow-hidden rounded-sm border border-outline-variant/10">
+<img alt="Uploaded asset" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500" data-alt="dramatic wide angle shot of modern brutalist concrete architecture at night with sharp geometric shadows and soft ambient blue light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAo3X1fN_qLf8JV404j_jbjzUuF1x91TSGHfB3_F6dUBy88V_t8OGlqPhpdcPBO5N794mesEGSRvJZa46jeWnnvR_Ga5SK9pP3rVhrvDjGjh0GCNANSJP_-_Y_OEPd60erHAXBZyezQ1kqgRgB35kyqzPh9NXVrKAq8RFzBJZf8BLVVLNj-6yB-GlMYTHTkqhFSArw88yY9TL_3nz_F0F-gkm6LTvNbBH5Hpyzb3yht3mfb-Od6dzkE-jChrh6tsdZyK-YydI1nw-c"/>
+<div class="absolute top-4 left-4 bg-surface-container-highest/80 backdrop-blur-md px-3 py-1 rounded-sm border border-outline-variant/20">
+<span class="font-mono text-[10px] text-tertiary uppercase tracking-tighter">Exposed Signature Detected</span>
+</div>
+</div>
+<!-- Muted Map Card -->
+<div class="bg-surface-container-low p-1 rounded-sm border border-outline-variant/5">
+<div class="flex items-center justify-between px-4 py-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-sm" data-icon="location_on">location_on</span>
+<span class="font-mono text-[10px] uppercase tracking-widest">Geolocation Trace</span>
+</div>
+<span class="font-mono text-[10px] text-on-surface-variant">40.7128° N, 74.0060° W</span>
+</div>
+<div class="h-48 bg-surface-container-lowest relative overflow-hidden grayscale contrast-125 opacity-40">
+<img alt="Map location trace" class="w-full h-full object-cover" data-alt="abstract top-down satellite view of urban city grid in deep charcoal and muted steel blue colors minimalist cartography" data-location="New York City" src="https://lh3.googleusercontent.com/aida-public/AB6AXuByMjc6W4p6bSOFDF-7Ls0_hUgz-qDUm_I_i8kA1_I7JIPPocnEmDin6qoXoKItut6Rsa4sTrmrEKKEIEHbmix9DKL6izOHJhEGKkp6XO3z6SMTpTr2UcKb0_MJV2XnOY3TIoMqPkXzcUmIY-DL7S5OuAXml_3iXTdq-g-6omhHn0iZA5jtTcRGctLVyDl7EEWm1IftNshJmfdnMVXLQBXJa6urwsWu_CxiEElEyl5Z1WFT3v22JTcD-PH5blAi9ZlzHppGgN3oAJk"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-4 h-4 bg-tertiary/40 rounded-full animate-ping"></div>
+<div class="absolute w-2 h-2 bg-tertiary rounded-full"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Column: Data Table -->
+<section class="lg:w-7/12 p-8 relative flex flex-col bg-surface-container-low">
+<div class="flex items-center justify-between mb-6">
+<h2 class="text-sm font-mono uppercase tracking-[0.2em] text-on-surface-variant">Forensic Data Stream</h2>
+<div class="flex gap-4">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 bg-tertiary rounded-full"></div>
+<span class="text-[10px] font-mono text-tertiary-dim uppercase">Exposed</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 bg-secondary rounded-full"></div>
+<span class="text-[10px] font-mono text-secondary-dim uppercase">Sanitized</span>
+</div>
+</div>
+</div>
+<!-- Metadata Table -->
+<div class="flex-1 overflow-y-auto mb-20">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-outline-variant/10">
+<th class="py-4 font-mono text-[10px] uppercase tracking-widest text-on-surface-variant/60">Tag Name</th>
+<th class="py-4 font-mono text-[10px] uppercase tracking-widest text-on-surface-variant/60">Original Value</th>
+<th class="py-4 font-mono text-[10px] uppercase tracking-widest text-on-surface-variant/60">Sanitized Output</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/5">
+<tr class="group hover:bg-surface-container transition-colors">
+<td class="py-4 font-medium text-xs">Device Make</td>
+<td class="py-4 font-mono text-xs text-tertiary">SONY_ILCE-7RM4</td>
+<td class="py-4 font-mono text-xs text-secondary-dim italic">REDACTED</td>
+</tr>
+<tr class="group hover:bg-surface-container transition-colors">
+<td class="py-4 font-medium text-xs">Lens Model</td>
+<td class="py-4 font-mono text-xs text-tertiary">FE 35mm F1.4 GM</td>
+<td class="py-4 font-mono text-xs text-secondary-dim italic">GENERIC_OPTIC</td>
+</tr>
+<tr class="group hover:bg-surface-container transition-colors">
+<td class="py-4 font-medium text-xs">Software Ver</td>
+<td class="py-4 font-mono text-xs text-tertiary">Adobe PS 25.1.0</td>
+<td class="py-4 font-mono text-xs text-secondary-dim italic">NULL</td>
+</tr>
+<tr class="group hover:bg-surface-container transition-colors">
+<td class="py-4 font-medium text-xs">Creation Date</td>
+<td class="py-4 font-mono text-xs text-tertiary">2024:08:12 14:22:05</td>
+<td class="py-4 font-mono text-xs text-secondary-dim">2024:01:01 00:00:00</td>
+</tr>
+<tr class="group hover:bg-surface-container transition-colors">
+<td class="py-4 font-medium text-xs">GPS Altitude</td>
+<td class="py-4 font-mono text-xs text-tertiary">142.3m</td>
+<td class="py-4 font-mono text-xs text-secondary-dim">0.0m</td>
+</tr>
+<tr class="group hover:bg-surface-container transition-colors">
+<td class="py-4 font-medium text-xs">Owner Name</td>
+<td class="py-4 font-mono text-xs text-tertiary">N_WESTERMAN</td>
+<td class="py-4 font-mono text-xs text-secondary-dim italic">ANONYMOUS</td>
+</tr>
+<tr class="group hover:bg-surface-container transition-colors">
+<td class="py-4 font-medium text-xs">Serial Number</td>
+<td class="py-4 font-mono text-xs text-tertiary">SN_8471295LX</td>
+<td class="py-4 font-mono text-xs text-secondary-dim italic">0x000000</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Sticky Footer Action -->
+<div class="absolute bottom-0 left-0 right-0 p-8 bg-surface-container-low/90 backdrop-blur-xl border-t border-outline-variant/10">
+<button class="w-full flex items-center justify-center gap-3 bg-primary-container text-on-primary-container py-4 font-bold tracking-widest text-sm hover:bg-primary/20 transition-all active:scale-[0.98] rounded-sm">
+<span class="material-symbols-outlined text-lg" data-icon="auto_fix_high">auto_fix_high</span>
+                        NUKE METADATA &amp; DOWNLOAD
+                    </button>
+</div>
+</section>
+</div>
+<!-- Batch Thumbnails Row -->
+<section class="bg-surface-container-lowest p-6 border-t border-outline-variant/5">
+<div class="flex items-center gap-6 overflow-x-auto pb-2 scrollbar-hide">
+<div class="flex-shrink-0 w-24 h-24 bg-surface-container border-2 border-primary rounded-sm overflow-hidden relative">
+<img alt="Thumbnail 1" class="w-full h-full object-cover" data-alt="thumbnail of brutalist architecture photo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC52ZajaPuta4EHjSKAb2vIHt7btNX1Nrmr5uVZU85tFYL5oAkNNn0jtWyxqdzB2lKH98uXHHhFjCMBaHlbMC_x8NrazjsEQPAJGgRdLypt9MvmEJlbfrf6g-ncmn3SjFMN19OsgdA24I3ynN-vNgwDUeAhA37GRtCmhLY1aCoh6SrkdhyhZNDIzrOhQUpyy0enrVul8-493dUWDZNFDckySEV7FzLRdLvmRyZBWI1RK7N4CFOH6CktwrpvBf68lmI4KMx-59HaFLc"/>
+<div class="absolute inset-0 bg-primary/10"></div>
+</div>
+<div class="flex-shrink-0 w-24 h-24 bg-surface-container rounded-sm overflow-hidden opacity-40 hover:opacity-100 transition-opacity cursor-pointer">
+<img alt="Thumbnail 2" class="w-full h-full object-cover" data-alt="thumbnail of a modern office glass building facade" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBE5Rp0vCL8vQOraJ2B1WSLknOBkmCrxyMxNalAPE-aERYQThoPcmeZWKIavohuZxxNeCvpOPMlLqxCeDgfvJCfNQFeuoRiZrisS0NpdTL_cAFYVOoA40LONQ2JdFLoyDVCiQTXbqoPVDTeiwDqV0C_Uhpa-_TPs_snC-Er7Er0grQ_Hae7C3Z1hm1SpKO5i1rOoJcwySB4-aZJefn4n1SLm9k2HGigSf1UO2BVgNwlsMzB2GBVyeUOfcNcbu6xBKsW-d4k1yrRr7o"/>
+</div>
+<div class="flex-shrink-0 w-24 h-24 bg-surface-container rounded-sm overflow-hidden opacity-40 hover:opacity-100 transition-opacity cursor-pointer">
+<img alt="Thumbnail 3" class="w-full h-full object-cover" data-alt="abstract architectural forms in low light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSel8KczV_eOPqRBx4xYVk5ZomCoXbS6DqgcGaSktVJAkzyTNpc17cJMUHxyhPPFCV4swlv0OX0FyZ5Rk458HIX9qd9gA5_fvEhWFo5DuDdNcw7gu7aWlZAnnCjvSGi7CLV7sgpm2XDMs-qOqoBH0c-_xTj-Qjo2DOekCLup1pYrpvkkn8X2l3b4xufJKuNwh3NzQ-kLGZHzmqKjTvc3ENGLyTtwFnhFMeRnGXzCXUffaMlr1DTP8059uxQ5Pk6vhQO0JR3tx7qK0"/>
+</div>
+<div class="flex-shrink-0 w-24 h-24 bg-surface-container rounded-sm overflow-hidden opacity-40 hover:opacity-100 transition-opacity cursor-pointer">
+<img alt="Thumbnail 4" class="w-full h-full object-cover" data-alt="minimalist landscape photo of misty lake" src="https://lh3.googleusercontent.com/aida-public/AB6AXuChv4IEEL_ChJu9-RB0SmrJvM6m92DH_yQnuNBpNXwDw56Pzpt51tDm0bvY89X4MQtIZpXw4VI00P2mmrVtqsU54CzhPbsYy--GvIweSK4w_fGiWW9ZwcFAoR5alv8nww9y5h5O6cpfZYzlw-7Sjxg7Em7K6_4BdiJwZ1vP61RvNVyHhXAXS7uqAq6g9kTUA8pm-FjHbRblMDxjsf5aCwLkSyscM9CMuNShJ7an7YE0UTPfLx_SvJnLGZ7618sLr-Yu7l9MEKThF6Q"/>
+</div>
+<div class="flex-shrink-0 w-24 h-24 border-2 border-dashed border-outline-variant/20 flex flex-col items-center justify-center text-on-surface-variant hover:border-primary/40 hover:text-primary transition-all cursor-pointer">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+<span class="text-[8px] font-mono mt-1 uppercase">Queue</span>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="w-full py-4 flex justify-between items-center px-10 w-full mt-auto bg-[#0c0e12] border-t border-[#424854]/10">
+<div class="font-['JetBrains_Mono'] text-[10px] text-[#a5abba] uppercase tracking-[0.2em]">
+                © 2024 Forensic Unit. Encrypted Environment.
+            </div>
+<div class="flex gap-8">
+<a class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.2em] text-[#a5abba]/50 hover:text-[#a9cecc] transition-colors" href="#">Documentation</a>
+<a class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.2em] text-[#a5abba]/50 hover:text-[#a9cecc] transition-colors" href="#">Privacy Policy</a>
+<a class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.2em] text-[#a5abba]/50 hover:text-[#a9cecc] transition-colors" href="#">Security Audit</a>
+</div>
+</footer>
+</main>
+</body></html>
