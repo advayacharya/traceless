@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useRef } from 'react';
+import LandingPage from './views/LandingPage';
 import TopNav from './components/TopNav';
 import Sidebar from './components/Sidebar';
 import Dropzone from './components/Dropzone';
@@ -8,6 +9,7 @@ import DataPanel from './components/DataPanel';
 import BatchThumbnails from './components/BatchThumbnails';
 import Footer from './components/Footer';
 import SecurityModal from './components/SecurityModal';
+import VantaBackground from './components/VantaBackground';
 
 // Views
 import DashboardView from './views/DashboardView';
@@ -28,6 +30,7 @@ let nextId = 0;
 
 export default function App() {
   // ── Navigation ──
+  const [showLanding, setShowLanding] = useState(true);
   const [currentView, setCurrentView] = useState('expose');
   const [securityModalOpen, setSecurityModalOpen] = useState(false);
 
@@ -263,8 +266,25 @@ export default function App() {
     );
   };
 
+  // ── Landing gate ──
+  if (showLanding) {
+    return (
+      <div className="relative min-h-screen">
+        <VantaBackground />
+        <div className="relative z-10">
+          <LandingPage onEnter={() => setShowLanding(false)} />
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-background text-on-surface">
+    <div className="relative min-h-screen text-on-surface">
+      {/* Persistent animated background */}
+      <VantaBackground />
+
+      {/* Semi-transparent app shell over the Vanta mesh */}
+      <div className="relative z-10 min-h-screen" style={{ backgroundColor: 'rgba(12, 14, 18, 0.82)' }}>
       <TopNav
         currentView={currentView}
         onNavigate={handleNavigate}
@@ -311,6 +331,7 @@ export default function App() {
         isOpen={securityModalOpen}
         onClose={() => setSecurityModalOpen(false)}
       />
+      </div>
     </div>
   );
 }
