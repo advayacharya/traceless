@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#111319"/>
+      <stop offset="100%" stop-color="#0c0e12"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c4eae8"/>
+      <stop offset="100%" stop-color="#a9cecc"/>
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="64" height="64" rx="14" fill="url(#bg)" stroke="#424854" stroke-width="1.5"/>
+  <!-- Shield body -->
+  <path d="M32 10 L50 20 L50 34 C50 46 32 54 32 54 C32 54 14 46 14 34 L14 20 Z" 
+        fill="none" stroke="url(#accent)" stroke-width="2.5" stroke-linejoin="round"/>
+  <!-- Eye / scan symbol inside shield -->
+  <ellipse cx="32" cy="30" rx="10" ry="7" fill="none" stroke="#a9cecc" stroke-width="2"/>
+  <circle cx="32" cy="30" r="3.5" fill="#a9cecc"/>
+  <!-- Scan line -->
+  <line x1="22" y1="40" x2="42" y2="40" stroke="#ec9796" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="3 2"/>
+  <!-- Corner brackets -->
+  <path d="M18 16 L18 13 L21 13" fill="none" stroke="#424854" stroke-width="1" stroke-linecap="round"/>
+  <path d="M46 16 L46 13 L43 13" fill="none" stroke="#424854" stroke-width="1" stroke-linecap="round"/>
+</svg>
